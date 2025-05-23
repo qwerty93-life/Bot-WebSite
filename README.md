@@ -13,53 +13,42 @@ A modern, responsive website for the Razor Discord Bot built with React, TypeScr
 - **Premium Features**: Showcase of premium bot capabilities
 - **Documentation**: Comprehensive command documentation
 - **Mobile Responsive**: Fully responsive design for all devices
+    
+## Customizing Your Website 🚀
 
-## Customization Guide 🎨
+You can easily personalize every aspect of the site using the configuration files and React components. Here's how:
 
-Here's where to find and modify key elements of the website:
+### 1. Links and URLs
+- **Discord Invite**: Edit the Discord link in `src/config/site.config.ts` under `socialLinks` (platform: "Discord").
+- **GitHub Link**: Edit in `src/config/site.config.ts` under `socialLinks` (platform: "GitHub").
+- **Twitter Link**: Edit in `src/config/site.config.ts` under `socialLinks` (platform: "Twitter").
+- **Footer Links**: All footer links are configurable in the `footerLinks` section of the same file.
 
-### Links and URLs
-- **Discord Invite**: Update in `src/components/home/Hero.tsx` and `src/pages/Premium.tsx`
-- **GitHub Links**: Update in `src/components/layout/Footer.tsx`
-- **Discord Server Link**: Update in `src/components/layout/Footer.tsx` (`https://discord.gg/NEUJAuhk9r`)
-
-### API Configuration
-- **API Endpoints**: Update in `src/config/api.ts`
+### 2. Bot Info & Branding
+- **Bot Name**: Change the `botName` property in `src/config/site.config.ts`.
+- **Bot Description**: Change the `botDescription` property in `src/config/site.config.ts`.
+- **Bot Version**: Change the `botVersion` property in `src/config/site.config.ts`.
+- **Server Count**: Change the `totalServers` property in `src/config/site.config.ts`.
+- **Bot Avatar**: Set the `botAvatarUrl` property in `src/config/site.config.ts` to your bot's profile image URL. If left empty, a default icon will be shown.
   ```typescript
-  export const API_CONFIG = {
-    BASE_URL: 'https://tec-api.galaxyhub.lol',
-    ENDPOINTS: {
-      BOT_INFO: '/bot-info'
-    }
-  }
+  botAvatarUrl: "https://cdn.discordapp.com/avatars/ID/AVATAR_HASH.png?size=512",
   ```
 
-### Bot Information
-- **Default Stats**: Update in `src/services/botService.ts`
-  ```typescript
-  const DEFAULT_BOT_INFO: BotInfo = {
-    totalUsers: 15000,
-    totalServers: 500,
-    // ... other stats
-  };
-  ```
+### 3. Hero Section (Homepage)
+- The Hero section is fully centered and displays: bot name, description, avatar, online status, action buttons, and stats.
+- You can control all content via `siteConfig` without editing the component code.
+- The "Add to Discord" and "View Commands" buttons are only shown if enabled in the `features` section of the config.
 
-### Content
-- **Features**: Update in `src/components/home/Features.tsx`
-- **Premium Features**: Update in `src/pages/Premium.tsx`
-- **Commands**: Update in `src/data/commands/` directory
-- **Terms of Service**: Update in `src/pages/TermsOfService.tsx`
-- **Privacy Policy**: Update in `src/pages/PrivacyPolicy.tsx`
+### 4. Other Content
+- **Features**: Edit the main features in `src/components/home/Features.tsx`.
+- **Commands**: Edit or add commands in `src/data/commands/`.
+- **Premium Section**: Edit in `src/pages/Premium.tsx`.
+- **Privacy & Terms**: Edit in `src/pages/PrivacyPolicy.tsx` and `src/pages/TermsOfService.tsx`.
 
-### Branding
-- **Bot Name**: Search for "Razor" across files and replace with your bot name
-- **Copyright Year**: Update in `src/components/layout/Footer.tsx`
-- **Support Email**: Update in `src/pages/PrivacyPolicy.tsx` and `src/pages/TermsOfService.tsx`
-
-### Colors and Styling
-- **Theme Colors**: Update in `src/index.css`
-- **Background**: Modify `.bg-mesh` in `src/index.css`
-- **Button Styles**: Update `.btn-primary` and `.btn-secondary` in `src/index.css`
+### 5. Colors & Styling
+- **Theme Colors**: Customize in `src/index.css`.
+- **Background**: Edit the `.bg-mesh` class in `src/index.css`.
+- **Button Styles**: Edit `.btn-primary` and `.btn-secondary` in `src/index.css`.
 
 ## Tech Stack 🛠️
 
