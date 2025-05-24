@@ -1,3 +1,5 @@
+import { LucideIcon } from 'lucide-react';
+
 export interface Command {
   name: string;
   description: string;
@@ -7,7 +9,7 @@ export interface Command {
 }
 
 export interface CommandCategory {
-  icon: React.ReactNode;
+  icon: LucideIcon;
   name: string;
   description: string;
   commands: Command[];

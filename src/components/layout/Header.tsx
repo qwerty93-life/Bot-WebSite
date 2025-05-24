@@ -1,134 +1,129 @@
-import React, { useState, useEffect } from 'react';
-import { Bot, Menu, X } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { Bot, Menu, X, LayoutDashboard } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { siteConfig } from '../../config/site.config';
 
 export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const handleNavClick = (item: string) => {
+  const handleNavClick = (sectionId: string) => {
     setIsMobileMenuOpen(false);
     
-    if (item === 'Stats' || item === 'Features' || item === 'Updates') {
-      if (location.pathname !== '/') {
-        window.location.href = `/#${item.toLowerCase()}`;
-      } else {
-        document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' });
+    if (location.pathname !== '/') {
+      navigate('/', { state: { scrollTo: sectionId } });
+    } else {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'backdrop-blur-xl bg-black/50' : 'bg-transparent'
-    }`}>
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="relative">
-              <div className="absolute inset-0 bg-blue-500 blur-lg opacity-50 group-hover:opacity-100 transition-opacity"></div>
-              <Bot className="w-8 h-8 text-blue-500 relative z-10 transform group-hover:rotate-12 transition-transform" />
-            </div>
-            <span className="font-bold text-xl bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-              Razor
-            </span>
-          </Link>
+    <header className="fixed top-0 left-0 right-0 z-50">
+      <div className="mx-4 my-4 glass rounded-2xl">
+        <div className="max-w-[1800px] mx-auto">
+          <div className="flex items-center justify-between h-16 px-6">
+            <Link to="/" className="flex items-center gap-3">
+              <Bot className="w-8 h-8 text-blue-500" />
+              <span className="font-bold text-xl">{siteConfig.siteName}</span>
+            </Link>
 
-          <nav className="hidden md:flex items-center gap-8">
-            {['Features', 'Commands', 'Premium', 'Stats', 'Updates'].map((item) => (
-              ['Stats', 'Features', 'Updates'].includes(item) ? (
-                <button
-                  key={item}
-                  onClick={() => handleNavClick(item)}
-                  className="relative group text-gray-400 hover:text-white transition-colors"
+            <nav className="hidden md:flex items-center gap-8">
+              <button 
+                onClick={() => handleNavClick('features')} 
+                className="text-gray-400 hover:text-white transition-colors font-medium px-2 py-1 rounded-md hover:bg-white/10"
+              >
+                Features
+              </button>
+              {siteConfig.features.enableCommands && (
+                <Link to="/commands" className="text-gray-400 hover:text-white transition-colors font-medium px-2 py-1 rounded-md hover:bg-white/10">
+                  Commands
+                </Link>
+              )}
+              <Link to="/premium" className="text-gray-400 hover:text-white transition-colors font-medium px-2 py-1 rounded-md hover:bg-white/10">
+                Premium
+              </Link>
+              <button 
+                onClick={() => handleNavClick('stats')} 
+                className="text-gray-400 hover:text-white transition-colors font-medium px-2 py-1 rounded-md hover:bg-white/10"
+              >
+                Stats
+              </button>
+              <button 
+                onClick={() => handleNavClick('updates')} 
+                className="text-gray-400 hover:text-white transition-colors font-medium px-2 py-1 rounded-md hover:bg-white/10"
+              >
+                Updates
+              </button>
+              {siteConfig.features.enableDashboard && (
+                <a 
+                  href="#" 
+                  className="relative overflow-hidden group px-4 py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl hover:shadow-[0_0_2rem_-0.5rem_#3b82f6] transition-all duration-300 border border-white/10 font-medium text-white"
                 >
-                  <span>{item}</span>
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"></span>
-                </button>
-              ) : (
-                <Link
-                  key={item}
-                  to={`/${item.toLowerCase()}`}
-                  className="relative group"
-                >
-                  <span className="text-gray-400 hover:text-white transition-colors">
-                    {item}
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                  <span className="relative flex items-center gap-2 text-sm font-medium">
+                    <LayoutDashboard className="w-4 h-4" />
+                    Dashboard
                   </span>
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"></span>
-                </Link>
-              )
-            ))}
-            <a
-              href="#"
-              className="relative inline-flex items-center justify-center px-6 py-2 overflow-hidden font-medium text-white transition-all duration-300 ease-out border-2 border-blue-500 rounded-lg group hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600"
+                </a>
+              )}
+            </nav>
+
+            <button
+              className="md:hidden"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 translate-y-full group-hover:translate-y-0 ease">
-                Dashboard
-              </span>
-              <span className="absolute flex items-center justify-center w-full h-full text-blue-500 transition-all duration-300 transform group-hover:translate-y-[-100%] ease">
-                Dashboard
-              </span>
-              <span className="relative invisible">Dashboard</span>
-            </a>
-          </nav>
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
 
-          <button
-            className="md:hidden text-gray-400 hover:text-white transition-colors"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-
-        <div className={`md:hidden transition-all duration-300 ease-in-out ${
-          isMobileMenuOpen 
-            ? 'max-h-64 opacity-100 visible'
-            : 'max-h-0 opacity-0 invisible'
-        }`}>
-          <nav className="flex flex-col gap-4 py-6">
-            {['Features', 'Commands', 'Premium', 'Stats', 'Updates'].map((item) => (
-              ['Stats', 'Features', 'Updates'].includes(item) ? (
-                <button
-                  key={item}
-                  onClick={() => handleNavClick(item)}
-                  className="text-left text-gray-400 hover:text-white transition-colors px-4 py-2"
+          {isMobileMenuOpen && (
+            <nav className="md:hidden p-4 border-t border-white/10">
+              <div className="flex flex-col gap-4">
+                <button 
+                  onClick={() => handleNavClick('features')} 
+                  className="text-left text-gray-400 hover:text-white transition-colors font-medium px-2 py-1 rounded-md hover:bg-white/10"
                 >
-                  {item}
+                  Features
                 </button>
-              ) : (
-                <Link
-                  key={item}
-                  to={`/${item.toLowerCase()}`}
-                  className="text-gray-400 hover:text-white transition-colors px-4 py-2"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item}
+                {siteConfig.features.enableCommands && (
+                  <Link to="/commands" className="text-gray-400 hover:text-white transition-colors font-medium px-2 py-1 rounded-md hover:bg-white/10">
+                    Commands
+                  </Link>
+                )}
+                <Link to="/premium" className="text-gray-400 hover:text-white transition-colors font-medium px-2 py-1 rounded-md hover:bg-white/10">
+                  Premium
                 </Link>
-              )
-            ))}
-            <a
-              href="#"
-              className="relative inline-flex items-center justify-center px-4 py-2 overflow-hidden font-medium text-white transition-all duration-300 ease-out border-2 border-blue-500 rounded-lg group hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 mx-4"
-            >
-              <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 translate-y-full group-hover:translate-y-0 ease">
-                Dashboard
-              </span>
-              <span className="absolute flex items-center justify-center w-full h-full text-blue-500 transition-all duration-300 transform group-hover:translate-y-[-100%] ease">
-                Dashboard
-              </span>
-              <span className="relative invisible">Dashboard</span>
-            </a>
-          </nav>
+                <button 
+                  onClick={() => handleNavClick('stats')} 
+                  className="text-left text-gray-400 hover:text-white transition-colors font-medium px-2 py-1 rounded-md hover:bg-white/10"
+                >
+                  Stats
+                </button>
+                <button 
+                  onClick={() => handleNavClick('updates')} 
+                  className="text-left text-gray-400 hover:text-white transition-colors font-medium px-2 py-1 rounded-md hover:bg-white/10"
+                >
+                  Updates
+                </button>
+                {siteConfig.features.enableDashboard && (
+                  <a 
+                    href="#" 
+                    className="relative overflow-hidden group px-4 py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl hover:shadow-[0_0_2rem_-0.5rem_#3b82f6] transition-all duration-300 border border-white/10 text-center font-medium text-white"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                    <span className="relative flex items-center justify-center gap-2 text-sm font-medium">
+                      <LayoutDashboard className="w-4 h-4" />
+                      Dashboard
+                    </span>
+                  </a>
+                )}
+              </div>
+            </nav>
+          )}
         </div>
       </div>
     </header>

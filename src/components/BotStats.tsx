@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Users, Server, Signal, Terminal, Layout, Code, Clock } from 'lucide-react';
 import { BotInfo } from '../types/bot';
 import { getBotInfo } from '../services/botService';

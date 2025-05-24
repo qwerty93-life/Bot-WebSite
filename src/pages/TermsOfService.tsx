@@ -1,7 +1,7 @@
-import React from 'react';
 import { Shield, AlertCircle } from 'lucide-react';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
+import { siteConfig } from '../config/site.config';
 
 export default function TermsOfService() {
   return (
@@ -10,18 +10,15 @@ export default function TermsOfService() {
       
       <main className="pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-4">
-          {/* Header Section */}
           <div className="text-center mb-16">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-500/10 mb-6">
               <Shield className="w-8 h-8 text-blue-500" />
             </div>
             <h1 className="text-4xl font-bold mb-4">Terms of Service</h1>
-            <p className="text-gray-400">Last updated: January 06, 2025</p>
+            <p className="text-gray-400">Last updated: March 15, 2024</p>
           </div>
 
-          {/* Content */}
           <div className="space-y-12">
-            {/* Important Notice */}
             <div className="glass p-6 rounded-lg border-l-4 border-l-yellow-500">
               <div className="flex items-start gap-4">
                 <AlertCircle className="w-6 h-6 text-yellow-500 flex-shrink-0 mt-1" />
@@ -34,7 +31,6 @@ export default function TermsOfService() {
               </div>
             </div>
 
-            {/* Terms Sections */}
             <section>
               <h2 className="text-2xl font-semibold mb-6">1. Usage Agreement</h2>
               <div className="glass p-6 rounded-lg space-y-4">
@@ -105,7 +101,7 @@ export default function TermsOfService() {
                 </p>
                 <ul className="list-disc list-inside text-gray-300 space-y-2">
                   <li>Discord Support Server</li>
-                  <li>Email: support@razorbot.com</li>
+                  <li>Email: {siteConfig.supportEmail}</li>
                 </ul>
               </div>
             </section>

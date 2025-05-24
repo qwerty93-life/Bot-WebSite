@@ -1,48 +1,122 @@
-import React from 'react';
-import { Bot, Github, MessageCircle } from 'lucide-react';
+import { Bot, Github, Heart, ExternalLink } from 'lucide-react';
+import { CiTwitter } from "react-icons/ci";
+import { AiOutlineDiscord } from "react-icons/ai";
 import { Link } from 'react-router-dom';
+import { siteConfig } from '../../config/site.config';
 
 export function Footer() {
+
+
   return (
-    <footer className="border-t border-white/10 py-12">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex flex-col items-center">
-          <div className="flex items-center gap-2 mb-6">
-            <Bot className="w-6 h-6 text-blue-500" />
-            <span className="font-bold">Razor</span>
+    <footer className="w-full py-8 px-4">
+      <div className="max-w-[1800px] mx-auto">
+        <div className="glass rounded-2xl p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <div className="space-y-4">
+              <Link to="/" className="flex items-center gap-3 group">
+                <Bot className="w-7 h-7 text-blue-500 group-hover:rotate-12 transition-transform" />
+                <span className="font-bold text-lg">{siteConfig.siteName}</span>
+              </Link>
+              <p className="text-gray-400 text-sm">
+                {siteConfig.siteDescription}
+              </p>
+              <div className="flex gap-3">
+                {siteConfig.socialLinks.map((social, index) => (
+                  <a 
+                    key={index}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 glass rounded-lg hover:scale-110 transition-transform duration-300"
+                  >
+                    {social.platform === 'Discord' ? (
+                      <AiOutlineDiscord className="w-4 h-4 text-gray-400 hover:text-white transition-colors" />
+                    ) : social.platform === 'GitHub' ? (
+                      <Github className="w-4 h-4 text-gray-400 hover:text-white transition-colors" />
+                    ) : social.platform === 'Twitter' ? (
+                      <CiTwitter className="w-4 h-4 text-gray-400 hover:text-white transition-colors" />
+                    ) : null}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-base mb-3">Resources</h3>
+              <ul className="space-y-2">
+                {siteConfig.footerLinks.resources.map((link, index) => (
+                  <li key={index}>
+                    <Link 
+                      to={link.url}
+                      className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 text-sm"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-blue-500"></span>
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-base mb-3">Legal</h3>
+              <ul className="space-y-2">
+                {siteConfig.footerLinks.legal.map((link, index) => (
+                  <li key={index}>
+                    <Link 
+                      to={link.url}
+                      className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 text-sm"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-blue-500"></span>
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-base mb-3">Contact</h3>
+              <ul className="space-y-2">
+                {siteConfig.footerLinks.contact.map((link, index) => (
+                  <li key={index}>
+                    <Link 
+                      to={link.url}
+                      className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 text-sm"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-blue-500"></span>
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          
-          <div className="flex gap-6 mb-6">
-            <a href="https://github.com/Casper104s" className="text-gray-400 hover:text-white">
-              <Github className="w-5 h-5" />
-            </a>
-            <a href="https://discord.gg/NEUJAuhk9r" className="text-gray-400 hover:text-white">
-              <MessageCircle className="w-5 h-5" />
-            </a>
-          </div>
-          
-          <div className="flex gap-6 mb-6 text-sm text-gray-400">
-            <Link to="/terms" className="hover:text-white transition-colors">
-              Terms of Service
-            </Link>
-            <Link to="/privacy" className="hover:text-white transition-colors">
-              Privacy Policy
-            </Link>
-            <Link to="/commands" className="hover:text-white transition-colors">
-              Commands
-            </Link>
-          </div>
-          
-          <div className="text-center text-sm text-gray-400">
-            <p className="mb-2">© 2025 Razor. All rights reserved.</p>
-            <a 
-              href="https://casper.104shop.xyz" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-blue-500 hover:text-blue-400 transition-colors"
-            >
-              Made by Casper
-            </a>
+
+          <div className="flex flex-col md:flex-row justify-between items-center pt-6 border-t border-white/10">
+            <p className="text-gray-400 text-xs mb-3 md:mb-0">
+              © {new Date().getFullYear()} {siteConfig.siteName}. All rights reserved.
+            </p>
+
+            {/* 
+              It would be appreciated if this part of the code is not modified. Thank you!
+              Casper104S 
+            */}
+
+            <div className="flex items-center gap-2 text-xs text-gray-400">
+              <span>Made with</span>
+              <Heart className="w-3 h-3 text-red-500 animate-pulse" />
+              <span>by</span>
+              <a 
+                href="https://casper.104shop.xyz"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:text-blue-400 transition-colors flex items-center gap-1"
+              >
+                Casper
+                <ExternalLink className="w-2.5 h-2.5" />
+              </a>
+            </div>
           </div>
         </div>
       </div>

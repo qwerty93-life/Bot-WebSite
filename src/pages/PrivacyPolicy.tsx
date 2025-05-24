@@ -1,7 +1,7 @@
-import React from 'react';
 import { Lock, AlertCircle, Shield, Database, Eye, Server, Trash2 } from 'lucide-react';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
+import { siteConfig } from '../config/site.config';
 
 export default function PrivacyPolicy() {
   return (
@@ -10,18 +10,15 @@ export default function PrivacyPolicy() {
       
       <main className="pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-4">
-          {/* Header Section */}
           <div className="text-center mb-16">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-500/10 mb-6">
               <Lock className="w-8 h-8 text-blue-500" />
             </div>
             <h1 className="text-4xl font-bold mb-4">Privacy Policy</h1>
-            <p className="text-gray-400">Last updated: January 08, 2025</p>
+            <p className="text-gray-400">Last updated: March 15, 2024</p>
           </div>
 
-          {/* Content */}
           <div className="space-y-12">
-            {/* Important Notice */}
             <div className="glass p-6 rounded-lg border-l-4 border-l-blue-500">
               <div className="flex items-start gap-4">
                 <AlertCircle className="w-6 h-6 text-blue-500 flex-shrink-0 mt-1" />
@@ -131,8 +128,8 @@ export default function PrivacyPolicy() {
                   For privacy-related questions or concerns, you can reach us through:
                 </p>
                 <ul className="list-disc list-inside text-gray-300 space-y-2">
-                  <li>Email: privacy@razorbot.com</li>
                   <li>Discord Support Server</li>
+                  <li>Email: {siteConfig.supportEmail}</li>
                 </ul>
               </div>
             </section>

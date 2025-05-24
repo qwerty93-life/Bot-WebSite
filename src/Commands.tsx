@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Bot, Search, ChevronDown, ChevronUp, Shield } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Search, ChevronDown, ChevronUp, Shield, Sparkles } from 'lucide-react';
 import { commandCategories } from './data/commands';
 import type { Command } from './types/commands';
+import { Header } from './components/layout/Header';
+import { Footer } from './components/layout/Footer';
 
 function Commands() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -28,15 +29,12 @@ function Commands() {
 
   useEffect(() => {
     if (searchTerm) {
-
       for (const category of commandCategories) {
         const matchingCommand = category.commands.find(isCommandVisible);
         if (matchingCommand) {
-
           if (!expandedCategories.includes(category.name)) {
             setExpandedCategories(prev => [...prev, category.name]);
           }
-
           setFoundCommand(matchingCommand.name);
           break;
         }
@@ -46,15 +44,12 @@ function Commands() {
     }
   }, [searchTerm]);
 
-
   useEffect(() => {
     if (foundCommand) {
       const element = document.getElementById(foundCommand);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
         element.classList.add('highlight-command');
-
         setTimeout(() => {
           element.classList.remove('highlight-command');
         }, 2000);
@@ -64,43 +59,28 @@ function Commands() {
 
   return (
     <div className="min-h-screen bg-mesh text-white">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-black/50">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex items-center justify-between h-20">
-            <Link to="/" className="flex items-center gap-3 group">
-              <div className="relative">
-                <div className="absolute inset-0 bg-blue-500 blur-lg opacity-50 group-hover:opacity-100 transition-opacity"></div>
-                <Bot className="w-8 h-8 text-blue-500 relative z-10 transform group-hover:rotate-12 transition-transform" />
-              </div>
-              <span className="font-bold text-xl bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                Razor Commands
-              </span>
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Header />
 
-      {/* Main Content */}
       <main className="pt-32 pb-20 max-w-6xl mx-auto px-4">
-        {/* Search */}
         <div className="mb-12">
-          <div className="relative mb-6">
-            <div className="absolute inset-0 bg-blue-500/20 blur-xl opacity-50"></div>
-            <div className="relative glass rounded-lg">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search commands..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-4 bg-transparent text-white placeholder-gray-400 focus:outline-none"
-              />
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-xl opacity-50"></div>
+            <div className="relative glass rounded-2xl overflow-hidden">
+              <div className="flex items-center px-6 py-4">
+                <Search className="w-5 h-5 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search commands..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full px-4 bg-transparent text-white placeholder-gray-400 focus:outline-none"
+                />
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Commands List */}
+        {/* lista  */}
         <div className="space-y-6">
           {commandCategories.map((category) => {
             const visibleCommands = category.commands.filter(isCommandVisible);
@@ -110,14 +90,13 @@ function Commands() {
             const Icon = category.icon;
 
             return (
-              <div key={category.name} className="glass rounded-lg overflow-hidden">
-                {/* Category Header */}
+              <div key={category.name} className="glass rounded-2xl overflow-hidden transition-all duration-300">
                 <button
                   onClick={() => toggleCategory(category.name)}
                   className="w-full p-6 flex items-center justify-between hover:bg-white/5 transition-colors"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="p-2 rounded-lg bg-white/5">
+                    <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20">
                       <Icon className="w-6 h-6 text-blue-500" />
                     </div>
                     <div className="text-left">
@@ -132,19 +111,19 @@ function Commands() {
                   )}
                 </button>
 
-                {/* Commands */}
                 {isExpanded && (
-                  <div className="border-t border-white/10">
+                  <div className="border-t border-white/5">
                     {visibleCommands.map((command, index) => (
                       <div
                         key={command.name}
                         id={command.name}
-                        className={`p-6 transition-colors duration-300 ${
-                          index !== visibleCommands.length - 1 ? 'border-b border-white/10' : ''
+                        className={`p-6 transition-all duration-300 hover:bg-white/5 ${
+                          index !== visibleCommands.length - 1 ? 'border-b border-white/5' : ''
                         }`}
                       >
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-2">
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-3">
+                            <Sparkles className="w-4 h-4 text-blue-500" />
                             <code className="text-blue-400 font-mono">{command.name}</code>
                             {command.permissions && (
                               <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-xs">
@@ -153,17 +132,23 @@ function Commands() {
                               </div>
                             )}
                           </div>
-                          <p className="text-gray-300">{command.description}</p>
-                          <div className="text-sm">
-                            <span className="text-gray-400">Usage: </span>
-                            <code className="text-gray-300">{command.usage}</code>
-                          </div>
-                          {command.examples && (
+                          <p className="text-gray-300 pl-7">{command.description}</p>
+                          <div className="pl-7 space-y-2">
                             <div className="text-sm">
-                              <span className="text-gray-400">Examples: </span>
-                              <code className="text-gray-300">{command.examples.join(', ')}</code>
+                              <span className="text-gray-400">Usage: </span>
+                              <code className="text-gray-300 bg-white/5 px-2 py-1 rounded">{command.usage}</code>
                             </div>
-                          )}
+                            {command.examples && (
+                              <div className="text-sm">
+                                <span className="text-gray-400">Examples: </span>
+                                {command.examples.map((example, i) => (
+                                  <code key={i} className="text-gray-300 bg-white/5 px-2 py-1 rounded mr-2">
+                                    {example}
+                                  </code>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -177,11 +162,16 @@ function Commands() {
             category.commands.every(cmd => !isCommandVisible(cmd))
           ) && (
             <div className="text-center py-12">
-              <p className="text-gray-400">No commands found matching your search</p>
+              <div className="glass rounded-2xl p-8">
+                <Search className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-400">No commands found matching your search</p>
+              </div>
             </div>
           )}
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }
