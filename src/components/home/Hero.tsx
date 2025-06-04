@@ -69,7 +69,7 @@ export function Hero() {
       <div className="flex flex-wrap justify-center gap-8 mt-2">
         <div className="flex flex-col items-center">
           <Users className="w-8 h-8 mb-1 text-blue-400" />
-          <span className="text-xl font-bold text-blue-300">{siteConfig.totalUsers}K+</span>
+          <span className="text-xl font-bold text-blue-300">{siteConfig.totalUsers}</span>
           <span className="text-xs text-gray-400">Active Users</span>
         </div>
         <div className="flex flex-col items-center">
