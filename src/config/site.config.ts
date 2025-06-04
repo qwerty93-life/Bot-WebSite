@@ -43,8 +43,8 @@ export const siteConfig: SiteConfig = {
   botName: "XNVD Bot", //hero
   botDescription: "A powerful Discord bot that brings advanced features and seamless automation to your server.",
   botVersion: "1.0.4",
-  totalServers: 30,
-  totalUsers: 11, // 11 = 11k to remove the k, go in components/home/hero.tsx and remove/change the K at line 72
+  totalServers: 20,
+  totalUsers: 486, // 11 = 11k to remove the k, go in components/home/hero.tsx and remove/change the K at line 72
   botAvatarUrl: "https://cdn.discordapp.com/avatars/1340384312272359476/a_6c218dbfc661090e4ddb8e73a1e2a601.gif?size=256?size=512",
   
   contactEmail: "soon",
