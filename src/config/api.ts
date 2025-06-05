@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-  BASE_URL: 'https://tec-api.galaxyhub.lol',
+  BASE_URL: 'https://xnvd.itermitas.com/',
   ENDPOINTS: {
     BOT_INFO: '/bot-info'
   },
